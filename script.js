@@ -17,7 +17,7 @@ let highScore = 0;
 let errorMessage = `You need to input a number between 1 and ${20 + gamesPlayed}`;
 const winMessage = `${userGuess} is correct!`;
 function randNum(gamesPlayed){
-    return Math.floor(Math.random()* 20 +1 + gamesPlayed );
+    return Math.floor(Math.random()* (20 + gamesPlayed) +1 );
 }
 
 
@@ -30,6 +30,7 @@ document.querySelector('.again').addEventListener('click', ()=>{
     document.querySelector('.total').textContent = (20 + gamesPlayed);
     gameOn = 1 
     numberOfguess = 0;
+    console.log(secretNumber)
 }});
 
 document.querySelector('.reset').addEventListener('click', ()=>{
