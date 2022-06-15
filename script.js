@@ -91,7 +91,7 @@ const resetButton = ()=>{
 }
 
 const checkButton = ()=>{
-    document.querySelector('.guess').value = " "
+    
     maxNumber = (20 + gamesPlayed)
     userGuess = Number(document.querySelector('.guess').value)
     if(!userGuess || userGuess > maxNumber || userGuess < 1){
@@ -126,8 +126,10 @@ const checkButton = ()=>{
         // Higher or Lower message and reduce by 1 guess
         if (userGuess < secretNumber){
                 textChanger(classObject.message, messageBoxText.higher)
+                document.querySelector('.guess').value = " "
         }else{
             textChanger(classObject.message, messageBoxText.lower)
+            document.querySelector('.guess').value = " "
         }
         numberOfguess+= 10;
         remainingGuesses -=1;
