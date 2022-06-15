@@ -14,17 +14,18 @@ html {
 body {
   font-family: 'Press Start 2P', sans-serif;
   color: #eee;
-  background-color: #222;
+  background-color: #43B047;
   /* background-color: #60b347; */
 }
 
 /* LAYOUT */
 header {
+  background-color: #049CD8;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 4rem;
+
   height: 35vh;
   border-bottom: 7px solid #eee;
 }
@@ -61,13 +62,14 @@ h1 {
 }
 
 .number {
-  background: #eee;
-  color: #333;
+  background: #FBD000;
+  color: #E52521;
   font-size: 6rem;
   width: 15rem;
   padding: 3rem 0rem;
   text-align: center;
   margin-top: 5rem;
+
  
 
 }
