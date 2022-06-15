@@ -125,10 +125,10 @@ const checkButton = ()=>{
         // Higher or Lower message and reduce by 1 guess
         if (userGuess < secretNumber){
                 textChanger(classObject.message, messageBoxText.higher)
-                document.querySelector('.guess').value = " "
+              
         }else{
             textChanger(classObject.message, messageBoxText.lower)
-            document.querySelector('.guess').value = " "
+          
         }
         numberOfguess+= 10;
         remainingGuesses -=1;
