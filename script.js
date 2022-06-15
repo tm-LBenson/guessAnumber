@@ -1,100 +1,153 @@
 'use strict';
 
-let gamesPlayed = 0;
-let secretNumber = randNum(gamesPlayed);
-
-const lowerMessage = 'Lower!';
-const higherMessage = 'Higher!';
-const guessMessage = 'Start guessing...';
-const gameOver = 'Game over!'
-const playAgain = 'Play again?'
 let gameOn = 1;
 let score = 0;
 let numberOfguess = 0;
 let userGuess = '';
 let remainingGuesses = 5;
 let highScore = 0;
-let errorMessage = `You need to input a number between 1 and ${20 + gamesPlayed}`;
-const winMessage = `${userGuess} is correct!`;
-function randNum(gamesPlayed){
-    return Math.floor(Math.random()* (20 + gamesPlayed) +1 );
+let gamesPlayed = 0;
+let maxNumber = 20
+let secretNumber = randNum(maxNumber);
+
+const messageBoxText = {
+    lower: 'Lower!',
+    higher: 'Higher!',
+    guess: `Guess a number between 1 and ${maxNumber}`,
+    gameOver: 'Game Over!',
+    playAgain: 'Play Again?',
+    error: `You need to input a number within current 1 and ${maxNumber}`
+}
+const classObject = {
+    message: '.message',
+    number: '.number',
+    remaining: '.remaining',
+    total: '.total',
+    score: '.score',
+    highscore: '.highscore',
+    resetButton: '.reset',
+    againButton: '.again',
+    checkButton: '.check'
 }
 
 
-document.querySelector('.again').addEventListener('click', ()=>{
+
+const textChanger = (className, messageOutput) =>{
+    document.querySelector(className).textContent = messageOutput}
+
+const winMessage = `${userGuess} is correct!`;
+function randNum(maxNumber){
+    return Math.floor(Math.random()* (maxNumber) +1 );
+}
+
+const errorGuess = (maxNumber) =>{
+    messageBoxText.error = `You need to input a number within current 1 and ${maxNumber}`
+    messageBoxText.guess = `Guess a number between 1 and ${maxNumber}`
+}
+
+const displayButton = (btnName)=>{
+    document.querySelector(btnName).classList.remove('hideMe')
+}
+const hideButton = (btnName) =>{
+    document.querySelector(btnName).classList.add('hideMe')
+}
+
+const playAgainButton = ()=>{
+    maxNumber = (20 + gamesPlayed)
+    errorGuess(maxNumber)
     if (remainingGuesses){
-    secretNumber = randNum(gamesPlayed);
-    document.querySelector('.message').textContent = guessMessage;
-    document.querySelector('.number').textContent = '?'
-    document.querySelector('.remaining').textContent = remainingGuesses;
-    document.querySelector('.total').textContent = (20 + gamesPlayed);
+    secretNumber = randNum(maxNumber);
+    textChanger(classObject.message, messageBoxText.guess);
+    textChanger(classObject.number, "?");
+    textChanger(classObject.remaining, remainingGuesses);
+    textChanger(classObject.total, (maxNumber))
     gameOn = 1 
     numberOfguess = 0;
-    console.log(secretNumber)
-}});
+    hideButton(classObject.againButton);
+    displayButton(classObject.checkButton)
+    document.querySelector('.guess').value = " "
+    
+}}
 
-document.querySelector('.reset').addEventListener('click', ()=>{
+const resetButton = ()=>{
     score = 0;
-    numberOfguess = 0
-    remainingGuesses = 5
-    secretNumber = randNum(gamesPlayed);
-    document.querySelector('.message').textContent = guessMessage;
-    document.querySelector('.remaining').textContent = remainingGuesses;
-    document.querySelector('.score').textContent = score;
-    document.querySelector('.number').textContent = '?'
-    document.querySelector('.total').textContent = (20);
-    gameOn = 1 
+    numberOfguess = 0;
+    remainingGuesses = 5;
+    gameOn = 1; 
     gamesPlayed = 0;
-});
+    maxNumber = (20 + gamesPlayed);
+    errorGuess(maxNumber);
+    secretNumber = randNum(maxNumber);
+    textChanger(classObject.message, messageBoxText.guess);
+    textChanger(classObject.remaining, remainingGuesses);
+    textChanger(classObject.score, score);
+    textChanger(classObject.number, "?");
+    textChanger(classObject.total, "20")
+    hideButton(classObject.resetButton);
+    document.querySelector('.guess').value = " "
+    displayButton(classObject.checkButton)
+     
+     
+}
 
-document.querySelector('.check').addEventListener('click', ()=>{
+const checkButton = ()=>{
+    maxNumber = (20 + gamesPlayed)
     userGuess = Number(document.querySelector('.guess').value)
-    if(!userGuess || userGuess > 20 + gamesPlayed || userGuess < 1){
-        document.querySelector('.message').textContent = errorMessage;
+    if(!userGuess || userGuess > maxNumber || userGuess < 1){
+        textChanger(classObject.message, messageBoxText.error);
     }else if(!remainingGuesses){
-        document.querySelector('.message').textContent = gameOver;
-        document.querySelector('.reset').classList.remove('.hideMe')
-    } else if(!gameOn){
-        document.querySelector('.message').textContent = playAgain;
+        textChanger(classObject.message, messageBoxText.gameOver);
+        hideButton(classObject.checkButton);
+        displayButton(classObject.resetButton)
         
-    }else if(userGuess === secretNumber){
-
-        document.querySelector('.message').textContent = winMessage;
-        document.querySelector('.number').textContent = secretNumber;
+    } else if(!gameOn){
+        
+        textChanger(classObject.message, messageBoxText.playAgain);
+        
+        // This is the win condition
+    }else if(userGuess === secretNumber){        
+        textChanger(classObject.message, messageBoxText.winMessage);
+        textChanger(classObject.number, secretNumber)
         gameOn = 0;
         gamesPlayed +=1;
         score += (100 - numberOfguess);
         remainingGuesses = 5;
-        document.querySelector('.score').textContent = score;
+        hideButton(classObject.checkButton);
+        displayButton(classObject.againButton)
+
+        textChanger(classObject.score, score)
         if(score > highScore){
             highScore = score;
-            document.querySelector('.highscore').textContent = highScore;
+            textChanger(classObject.highscore, highScore)
         }
-
-
-    } else if (userGuess < secretNumber){
-        document.querySelector('.message').textContent = higherMessage;
-
+        
+    }else{
+        // Higher or Lower message and reduce by 1 guess
+        if (userGuess < secretNumber){
+                textChanger(classObject.message, messageBoxText.higher)
+        }else{
+            textChanger(classObject.message, messageBoxText.lower)
+        }
         numberOfguess+= 10;
         remainingGuesses -=1;
-        document.querySelector('.remaining').textContent = remainingGuesses;
+        textChanger(classObject.remaining, remainingGuesses)
         if(!remainingGuesses){
-            document.querySelector('.message').textContent = gameOver;
-            document.querySelector('.reset').classList.remove('.hideMe')
-        }
+            textChanger(classObject.message, messageBoxText.gameOver);
+            hideButton(classObject.checkButton);
+            displayButton(classObject.resetButton);
+                 }
+            } 
+}
 
-    } else if (userGuess > secretNumber){
-        document.querySelector('.message').textContent = lowerMessage;
 
-        numberOfguess+= 10;
-        remainingGuesses -=1;
-        document.querySelector('.remaining').textContent = remainingGuesses;
-        if(!remainingGuesses){
-            document.querySelector('.message').textContent = gameOver;
-            document.querySelector('.reset').classList.remove('.hideMe')
-        }
-    }
-    
+// 
+// document.querySelector('.reset').classList.remove('hideMe')
+// document.querySelector('reset').classList.remove('hideMe')
 
-});
+// Button Logic //
+document.querySelector('.again').addEventListener('click', playAgainButton);
+
+document.querySelector('.reset').addEventListener('click', resetButton);
+
+document.querySelector('.check').addEventListener('click', checkButton);
 

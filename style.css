@@ -123,5 +123,5 @@ margin-top: 4rem;
 }
 
 .hideMe{
-  opacity: 0;
+  display:none;
 }
