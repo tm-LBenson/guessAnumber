@@ -36,6 +36,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-direction: row-reverse;
 }
 
 .left {
@@ -130,4 +131,27 @@ margin-top: 4rem;
 
 footer{
 margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 650px) {
+  html{
+    font-size: 50%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+ main{
+  flex-direction: column;
+
+ }
+ html{
+  font-size: 30%;
+
+ }
+}
+
+@media screen and (max-width: 300px) {
+  .right{
+    width:30rem;
+  }
 }
