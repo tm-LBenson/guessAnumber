@@ -91,6 +91,7 @@ const resetButton = ()=>{
 }
 
 const checkButton = ()=>{
+    document.querySelector('.guess').value = " "
     maxNumber = (20 + gamesPlayed)
     userGuess = Number(document.querySelector('.guess').value)
     if(!userGuess || userGuess > maxNumber || userGuess < 1){
