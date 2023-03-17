@@ -1,4 +1,5 @@
 'use strict';
+analytics('Guess A Number');
 
 let gameOn = 1;
 let score = 0;
