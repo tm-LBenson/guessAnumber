@@ -1,9 +1,4 @@
 'use strict';
-const analyticsScriptTag = window.generateScriptTag(
-  'Guess-A-Number',
-  'd526e49d-cc0f-468f-b04d-f59e21f6365a',
-);
-document.body.innerHTML += analyticsScriptTag;
 
 let gameOn = 1;
 let score = 0;
